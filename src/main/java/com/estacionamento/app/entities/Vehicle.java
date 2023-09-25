@@ -1,10 +1,7 @@
 package com.estacionamento.app.entities;
 
 import com.estacionamento.app.entities.enums.VehiclesType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
@@ -21,15 +18,19 @@ public class Vehicle implements Serializable {
     private String plate;
     private VehiclesType type;
 
+    @ManyToOne
+    private Company company;
+
     public Vehicle() {
     }
 
-    public Vehicle(String brand, String model, String color, String plate, VehiclesType type) {
+    public Vehicle(String brand, String model, String color, String plate, VehiclesType type, Company company) {
         this.brand = brand;
         this.model = model;
         this.color = color;
         this.plate = plate;
         this.type = type;
+        this.company = company;
     }
 
     public Long getId() {
@@ -74,5 +75,9 @@ public class Vehicle implements Serializable {
 
     public void setType(VehiclesType type) {
         this.type = type;
+    }
+
+    public Company getCompany() {
+        return company;
     }
 }
