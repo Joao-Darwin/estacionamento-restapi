@@ -15,7 +15,8 @@ public class Company implements Serializable {
     private Long id;
 
     private String name;
-    private String CNPJ;
+    @Column(unique = true, nullable = false)
+    private String cnpj;
     private String address;
     private String phone;
     private int spacesForCars;
@@ -28,9 +29,9 @@ public class Company implements Serializable {
     public Company() {
     }
 
-    public Company(String name, String CNPJ, String address, String phone, int spacesForCars, int spacesForMotorcycles) {
+    public Company(String name, String cnpj, String address, String phone, int spacesForCars, int spacesForMotorcycles) {
         this.name = name;
-        this.CNPJ = CNPJ;
+        this.cnpj = cnpj;
         this.address = address;
         this.phone = phone;
         this.spacesForCars = spacesForCars;
@@ -49,12 +50,12 @@ public class Company implements Serializable {
         this.name = name;
     }
 
-    public String getCNPJ() {
-        return CNPJ;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCNPJ(String CNPJ) {
-        this.CNPJ = CNPJ;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getAddress() {
