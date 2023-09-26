@@ -2,6 +2,7 @@ package com.estacionamento.app.resources;
 
 import com.estacionamento.app.entities.Company;
 import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
+import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
 import com.estacionamento.app.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,17 @@ public class CompanyResource {
             return ResponseEntity.status(HttpStatus.FOUND).body(allCompanies);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteCompany(@PathVariable Long id) {
+        try {
+            companyService.deleteCompany(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (NotFoundException exception) {
+            ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(errorResponse);
         }
     }
 }
