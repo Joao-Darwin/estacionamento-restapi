@@ -40,6 +40,17 @@ public class CompanyResource {
         }
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> updateCompany(@PathVariable(value = "id") Long idCompany, @RequestBody Company companyUpdated) {
+        try {
+            companyUpdated = companyService.updateCompany(idCompany, companyUpdated);
+            return ResponseEntity.status(HttpStatus.OK).body(companyUpdated);
+        } catch (NotFoundException exception) {
+            ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(errorResponse);
+        }
+    }
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteCompany(@PathVariable Long id) {
         try {

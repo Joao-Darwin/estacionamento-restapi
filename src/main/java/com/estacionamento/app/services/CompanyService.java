@@ -30,6 +30,28 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
+    public Company updateCompany(Long idCompany, Company companyUpdated) {
+        try {
+            Company companyToUpdate = companyRepository.findById(idCompany).get();
+
+            updateCompanyData(companyUpdated, companyToUpdate);
+
+            companyRepository.save(companyToUpdate);
+            return companyToUpdate;
+        } catch(NoSuchElementException exception) {
+            throw new NotFoundException(String.format("Company to remove not finded. Id: %d", idCompany));
+        }
+    }
+
+    private void updateCompanyData(Company companyUpdated, Company companyToUpdate) {
+        companyToUpdate.setName(companyUpdated.getName());
+        companyToUpdate.setCnpj(companyUpdated.getCnpj());
+        companyToUpdate.setAddress(companyUpdated.getAddress());
+        companyToUpdate.setPhone(companyUpdated.getPhone());
+        companyToUpdate.setSpacesForCars(companyUpdated.getSpacesForCars());
+        companyToUpdate.setSpacesForMotorcycles(companyUpdated.getSpacesForMotorcycles());
+    }
+
     public void deleteCompany(Long idCompany) {
         try {
             companyRepository.deleteById(idCompany);
