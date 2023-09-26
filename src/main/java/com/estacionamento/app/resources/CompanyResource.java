@@ -35,6 +35,7 @@ public class CompanyResource {
             List<Company> allCompanies = companyService.findAll();
             return ResponseEntity.status(HttpStatus.FOUND).body(allCompanies);
         } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();        }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }
