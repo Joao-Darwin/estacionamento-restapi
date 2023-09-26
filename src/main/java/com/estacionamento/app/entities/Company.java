@@ -14,12 +14,17 @@ public class Company implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
     @Column(unique = true, nullable = false)
     private String cnpj;
+    @Column(nullable = false)
     private String address;
+    @Column(nullable = false)
     private String phone;
+    @Column(nullable = false)
     private int spacesForCars;
+    @Column(nullable = false)
     private int spacesForMotorcycles;
 
     @JsonIgnore
