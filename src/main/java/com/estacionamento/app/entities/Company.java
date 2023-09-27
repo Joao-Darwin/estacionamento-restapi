@@ -28,7 +28,7 @@ public class Company implements Serializable {
     private int spacesForMotorcycles;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
     private List<Vehicle> vehicles = new ArrayList<>();
 
     public Company() {
