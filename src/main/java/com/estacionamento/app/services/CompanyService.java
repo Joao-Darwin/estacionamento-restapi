@@ -39,7 +39,7 @@ public class CompanyService {
             companyRepository.save(companyToUpdate);
             return companyToUpdate;
         } catch(NoSuchElementException exception) {
-            throw new NotFoundException(String.format("Company to remove not finded. Id: %d", idCompany));
+            throw new NotFoundException(String.format("Company to update not finded. Id: %d", idCompany));
         }
     }
 
