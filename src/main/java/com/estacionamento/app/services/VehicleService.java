@@ -34,7 +34,9 @@ public class VehicleService {
     public Vehicle updateVehicle(Long idVehicle, Vehicle vehicleUpdated) {
         try {
             Vehicle vehicleToUpdate = vehicleRepository.findById(idVehicle).get();
+
             updateVehicleDatas(vehicleToUpdate, vehicleUpdated);
+
             vehicleRepository.save(vehicleToUpdate);
             return vehicleToUpdate;
         } catch (NoSuchElementException exception) {
@@ -50,5 +52,6 @@ public class VehicleService {
         vehicleToUpdate.setColor(vehicleUpdated.getColor());
         vehicleToUpdate.setPlate(vehicleUpdated.getPlate());
         vehicleToUpdate.setType(vehicleUpdated.getType());
+        vehicleToUpdate.setCompany(vehicleUpdated.getCompany());
     }
 }

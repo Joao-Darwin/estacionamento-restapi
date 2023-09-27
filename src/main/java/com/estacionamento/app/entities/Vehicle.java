@@ -85,4 +85,8 @@ public class Vehicle implements Serializable {
     public Company getCompany() {
         return company;
     }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 }
