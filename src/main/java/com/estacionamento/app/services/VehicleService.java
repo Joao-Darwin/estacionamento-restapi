@@ -29,4 +29,26 @@ public class VehicleService {
     public List<Vehicle> findAll() {
         return vehicleRepository.findAll();
     }
+
+
+    public Vehicle updateVehicle(Long idVehicle, Vehicle vehicleUpdated) {
+        try {
+            Vehicle vehicleToUpdate = vehicleRepository.findById(idVehicle).get();
+            updateVehicleDatas(vehicleToUpdate, vehicleUpdated);
+            vehicleRepository.save(vehicleToUpdate);
+            return vehicleToUpdate;
+        } catch (NoSuchElementException exception) {
+            throw new NotFoundException(String.format("Vehicle to update not finded. Id: %d", idVehicle));
+        } catch (DataIntegrityViolationException exception) {
+            throw new NotSaveException("Vehicle does not save, vehicle already exists");
+        }
+    }
+
+    private void updateVehicleDatas(Vehicle vehicleToUpdate, Vehicle vehicleUpdated) {
+        vehicleToUpdate.setBrand(vehicleUpdated.getBrand());
+        vehicleToUpdate.setModel(vehicleUpdated.getModel());
+        vehicleToUpdate.setColor(vehicleUpdated.getColor());
+        vehicleToUpdate.setPlate(vehicleUpdated.getPlate());
+        vehicleToUpdate.setType(vehicleUpdated.getType());
+    }
 }
