@@ -1,6 +1,7 @@
 package com.estacionamento.app.services;
 
 import com.estacionamento.app.entities.Company;
+import com.estacionamento.app.entities.Vehicle;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
 import com.estacionamento.app.repositories.CompanyRepository;
@@ -28,6 +29,16 @@ public class CompanyService {
 
     public List<Company> findAll() {
         return companyRepository.findAll();
+    }
+
+    public List<Vehicle> findAllVehiclesByCompany(Long idCompany) {
+        try {
+            Company company = companyRepository.findById(idCompany).get();
+
+            return company.getVehicles();
+        } catch (NoSuchElementException exception) {
+            throw new NotFoundException(String.format("Company not finded. Id: %d", idCompany));
+        }
     }
 
     public Company updateCompany(Long idCompany, Company companyUpdated) {
