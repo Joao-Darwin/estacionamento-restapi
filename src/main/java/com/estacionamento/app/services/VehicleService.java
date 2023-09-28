@@ -1,8 +1,11 @@
 package com.estacionamento.app.services;
 
+import com.estacionamento.app.entities.Company;
 import com.estacionamento.app.entities.Vehicle;
+import com.estacionamento.app.entities.enums.VehiclesType;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
+import com.estacionamento.app.repositories.CompanyRepository;
 import com.estacionamento.app.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,8 +20,13 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    public Vehicle saveVehicle(Vehicle vehicle) {
+    @Autowired
+    private CompanyRepository companyRepository;
+
+    public Vehicle saveVehicle(Vehicle vehicle) throws NotSaveException{
         try {
+            checkIfParkingIsAvailable(vehicle);
+
             vehicleRepository.save(vehicle);
             return vehicle;
         } catch (DataIntegrityViolationException exception) {
@@ -26,10 +34,25 @@ public class VehicleService {
         }
     }
 
+    private void checkIfParkingIsAvailable(Vehicle vehicle) {
+        VehiclesType typeVehicle = vehicle.getType();
+        Long companyId = vehicle.getCompany().getId();
+        Company companyVehicle = companyRepository.findById(companyId).get();
+
+        if(typeVehicle == VehiclesType.CAR) {
+            if(companyVehicle.verifySpacesCarIsFull()){
+                throw new NotSaveException("Car does not save, parking's company is full!");
+            }
+        } else {
+            if(companyVehicle.verifySpacesMotorcyclesIsFull()) {
+                throw new NotSaveException("Motorcycle does not save, parking's company is full!");
+            }
+        }
+    }
+
     public List<Vehicle> findAll() {
         return vehicleRepository.findAll();
     }
-
 
     public Vehicle updateVehicle(Long idVehicle, Vehicle vehicleUpdated) {
         try {

@@ -1,5 +1,6 @@
 package com.estacionamento.app.entities;
 
+import com.estacionamento.app.entities.enums.VehiclesType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -97,5 +98,37 @@ public class Company implements Serializable {
 
     public List<Vehicle> getVehicles() {
         return vehicles;
+    }
+
+    public boolean verifySpacesCarIsFull() {
+        int numberCarOnSpaces = 0;
+
+        if(vehicles.isEmpty()) {
+            return false;
+        }
+
+        for(Vehicle vehicle : vehicles) {
+            if(vehicle.getType() == VehiclesType.CAR) {
+                numberCarOnSpaces += 1;
+            }
+        }
+
+        return numberCarOnSpaces == spacesForCars;
+    }
+
+    public boolean verifySpacesMotorcyclesIsFull() {
+        int numberMotorcyclesOnSpaces = 0;
+
+        if(vehicles.isEmpty()) {
+            return false;
+        }
+
+        for(Vehicle vehicle : vehicles) {
+            if(vehicle.getType() == VehiclesType.MOTORCYCLE) {
+                numberMotorcyclesOnSpaces += 1;
+            }
+        }
+
+        return numberMotorcyclesOnSpaces == spacesForMotorcycles;
     }
 }
