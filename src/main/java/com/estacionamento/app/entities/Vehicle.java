@@ -18,7 +18,7 @@ public class Vehicle implements Serializable {
     private String model;
     @Column(nullable = false)
     private String color;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String plate;
     @Column(nullable = false)
     private VehiclesType type;
