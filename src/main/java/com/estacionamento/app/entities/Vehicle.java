@@ -6,6 +6,11 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"plate", "companyId"})
+        }
+)
 public class Vehicle implements Serializable {
 
     @Id
@@ -18,12 +23,13 @@ public class Vehicle implements Serializable {
     private String model;
     @Column(nullable = false)
     private String color;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String plate;
     @Column(nullable = false)
     private VehiclesType type;
 
     @ManyToOne
+    @JoinColumn(name = "companyId")
     private Company company;
 
     public Vehicle() {
