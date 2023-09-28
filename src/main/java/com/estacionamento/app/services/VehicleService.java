@@ -54,4 +54,12 @@ public class VehicleService {
         vehicleToUpdate.setType(vehicleUpdated.getType());
         vehicleToUpdate.setCompany(vehicleUpdated.getCompany());
     }
+
+    public void deleteVehicle(Long idVehicle) {
+        try {
+            vehicleRepository.deleteById(idVehicle);
+        } catch (NoSuchElementException exception) {
+            throw new NotFoundException(String.format("Vehicle to remove not finded. Id: %d", idVehicle));
+        }
+    }
 }

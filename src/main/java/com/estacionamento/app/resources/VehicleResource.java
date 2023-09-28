@@ -50,4 +50,15 @@ public class VehicleResource {
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(errorResponse);
         }
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteVehicle(@PathVariable Long id) {
+        try {
+            vehicleService.deleteVehicle(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (NotFoundException exception) {
+            ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(errorResponse);
+        }
+    }
 }
