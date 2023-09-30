@@ -1,6 +1,7 @@
 package com.estacionamento.app.resources;
 
 import com.estacionamento.app.entities.Company;
+import com.estacionamento.app.entities.dtos.responses.DataCompanyDTO;
 import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
 import com.estacionamento.app.entities.dtos.responses.OnlyVehicleDTO;
 import com.estacionamento.app.exceptions.NotFoundException;
@@ -32,9 +33,9 @@ public class CompanyResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<Company>> findAll() {
+    public ResponseEntity<List<DataCompanyDTO>> findAll() {
         try {
-            List<Company> allCompanies = companyService.findAll();
+            List<DataCompanyDTO> allCompanies = companyService.findAll();
             return ResponseEntity.status(HttpStatus.FOUND).body(allCompanies);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

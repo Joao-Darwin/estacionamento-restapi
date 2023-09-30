@@ -2,6 +2,7 @@ package com.estacionamento.app.services;
 
 import com.estacionamento.app.entities.Company;
 import com.estacionamento.app.entities.Vehicle;
+import com.estacionamento.app.entities.dtos.responses.DataCompanyDTO;
 import com.estacionamento.app.entities.dtos.responses.OnlyVehicleDTO;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
@@ -29,9 +30,22 @@ public class CompanyService {
         }
     }
 
-    public List<Company> findAll() {
-        return companyRepository.findAll();
+    public List<DataCompanyDTO> findAll() {
+        List<Company> companies = companyRepository.findAll();
+        List<DataCompanyDTO> companiesDTOS = new ArrayList<>();
+
+        convertListCompanyToDataCompanyDTO(companies, companiesDTOS);
+
+        return companiesDTOS;
     }
+
+    private void convertListCompanyToDataCompanyDTO(List<Company> companies, List<DataCompanyDTO> companiesDTOS) {
+        for (Company company : companies) {
+            DataCompanyDTO companyDTO = new DataCompanyDTO(company.getId(), company.getName(), company.getAllSpaces(), company.getOccupiedSpaces());
+            companiesDTOS.add(companyDTO);
+        }
+    }
+
 
     public List<OnlyVehicleDTO> findAllVehiclesByCompany(Long idCompany) {
         try {
