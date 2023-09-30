@@ -2,6 +2,8 @@ package com.estacionamento.app.services;
 
 import com.estacionamento.app.entities.Company;
 import com.estacionamento.app.entities.Vehicle;
+import com.estacionamento.app.entities.dtos.responses.CompanyDTO;
+import com.estacionamento.app.entities.dtos.responses.VehicleDTO;
 import com.estacionamento.app.entities.enums.VehiclesType;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -50,8 +53,17 @@ public class VehicleService {
         }
     }
 
-    public List<Vehicle> findAll() {
-        return vehicleRepository.findAll();
+    public List<VehicleDTO> findAll() {
+        List<Vehicle> allVehicles = vehicleRepository.findAll();
+        List<VehicleDTO> allVehiclesDTO = new ArrayList<>();
+
+        for(Vehicle vehicle: allVehicles) {
+            CompanyDTO companyDTO = new CompanyDTO(vehicle.getCompany().getId(), vehicle.getCompany().getName());
+            VehicleDTO vehicleDTO = new VehicleDTO(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getType(), companyDTO);
+
+            allVehiclesDTO.add(vehicleDTO);
+        }
+        return allVehiclesDTO;
     }
 
     public Vehicle updateVehicle(Long idVehicle, Vehicle vehicleUpdated) {
