@@ -84,16 +84,13 @@ public class VehicleService {
     }
 
     private AllDataVehicle generateAllDataVehicle(Vehicle vehicle) {
-        Company company = vehicle.getCompany();
-        CompanyDTO companyDTO = new CompanyDTO(company.getId(), company.getName());
         AllDataVehicle vehicleDTO = new AllDataVehicle(vehicle.getId(),
                 vehicle.getBrand(),
                 vehicle.getModel(),
                 vehicle.getColor(),
                 vehicle.getPlate(),
                 vehicle.getEntryDate(),
-                vehicle.getType(),
-                companyDTO);
+                vehicle.getType());
 
         return vehicleDTO;
     }
