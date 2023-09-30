@@ -57,13 +57,18 @@ public class VehicleService {
         List<Vehicle> allVehicles = vehicleRepository.findAll();
         List<VehicleDTO> allVehiclesDTO = new ArrayList<>();
 
+        generatedAllVehiclesDTO(allVehicles, allVehiclesDTO);
+
+        return allVehiclesDTO;
+    }
+
+    private void generatedAllVehiclesDTO(List<Vehicle> allVehicles, List<VehicleDTO> allVehiclesDTO) {
         for(Vehicle vehicle: allVehicles) {
             CompanyDTO companyDTO = new CompanyDTO(vehicle.getCompany().getId(), vehicle.getCompany().getName());
             VehicleDTO vehicleDTO = new VehicleDTO(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getType(), companyDTO);
 
             allVehiclesDTO.add(vehicleDTO);
         }
-        return allVehiclesDTO;
     }
 
     public Vehicle updateVehicle(Long idVehicle, Vehicle vehicleUpdated) {
