@@ -131,4 +131,12 @@ public class Company implements Serializable {
 
         return numberMotorcyclesOnSpaces == spacesForMotorcycles;
     }
+
+    public int getAllSpaces() {
+        return spacesForCars + spacesForMotorcycles;
+    }
+
+    public int getOccupiedSpaces() {
+        return vehicles.size();
+    }
 }
