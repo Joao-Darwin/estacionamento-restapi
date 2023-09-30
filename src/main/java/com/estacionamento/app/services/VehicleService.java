@@ -75,7 +75,7 @@ public class VehicleService {
         try {
             Vehicle vehicleToUpdate = vehicleRepository.findById(idVehicle).get();
 
-            updateVehicleDatas(vehicleToUpdate, vehicleUpdated);
+            updateVehicleData(vehicleToUpdate, vehicleUpdated);
 
             vehicleRepository.save(vehicleToUpdate);
             return vehicleToUpdate;
@@ -86,7 +86,7 @@ public class VehicleService {
         }
     }
 
-    private void updateVehicleDatas(Vehicle vehicleToUpdate, Vehicle vehicleUpdated) {
+    private void updateVehicleData(Vehicle vehicleToUpdate, Vehicle vehicleUpdated) {
         vehicleToUpdate.setBrand(vehicleUpdated.getBrand());
         vehicleToUpdate.setModel(vehicleUpdated.getModel());
         vehicleToUpdate.setColor(vehicleUpdated.getColor());
