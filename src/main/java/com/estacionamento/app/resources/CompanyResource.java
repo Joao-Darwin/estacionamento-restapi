@@ -1,8 +1,8 @@
 package com.estacionamento.app.resources;
 
 import com.estacionamento.app.entities.Company;
-import com.estacionamento.app.entities.Vehicle;
 import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
+import com.estacionamento.app.entities.dtos.responses.OnlyVehicleDTO;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
 import com.estacionamento.app.services.CompanyService;
@@ -44,7 +44,7 @@ public class CompanyResource {
     @GetMapping(value = "/{id}/vehicles")
     public ResponseEntity<?> findVehiclesByCompany(@PathVariable Long id) {
         try {
-            List<Vehicle> vehicles = companyService.findAllVehiclesByCompany(id);
+            List<OnlyVehicleDTO> vehicles = companyService.findAllVehiclesByCompany(id);
             return ResponseEntity.status(HttpStatus.OK).body(vehicles);
         } catch (NotFoundException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());

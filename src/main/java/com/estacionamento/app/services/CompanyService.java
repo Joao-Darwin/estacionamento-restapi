@@ -2,6 +2,7 @@ package com.estacionamento.app.services;
 
 import com.estacionamento.app.entities.Company;
 import com.estacionamento.app.entities.Vehicle;
+import com.estacionamento.app.entities.dtos.responses.OnlyVehicleDTO;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
 import com.estacionamento.app.repositories.CompanyRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -31,13 +33,25 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public List<Vehicle> findAllVehiclesByCompany(Long idCompany) {
+    public List<OnlyVehicleDTO> findAllVehiclesByCompany(Long idCompany) {
         try {
             Company company = companyRepository.findById(idCompany).get();
+            List<Vehicle> allVehicles = company.getVehicles();
+            List<OnlyVehicleDTO> allVehiclesDTO = new ArrayList<>();
 
-            return company.getVehicles();
+            generatedAllVehiclesDTO(allVehicles, allVehiclesDTO);
+
+            return allVehiclesDTO;
         } catch (NoSuchElementException exception) {
             throw new NotFoundException(String.format("Company not finded. Id: %d", idCompany));
+        }
+    }
+
+    private void generatedAllVehiclesDTO(List<Vehicle> allVehicles, List<OnlyVehicleDTO> allVehiclesDTO) {
+        for (Vehicle vehicle : allVehicles) {
+            OnlyVehicleDTO vehicleDTO = new OnlyVehicleDTO(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getType());
+
+            allVehiclesDTO.add(vehicleDTO);
         }
     }
 
@@ -49,7 +63,7 @@ public class CompanyService {
 
             companyRepository.save(companyToUpdate);
             return companyToUpdate;
-        } catch(NoSuchElementException exception) {
+        } catch (NoSuchElementException exception) {
             throw new NotFoundException(String.format("Company to update not finded. Id: %d", idCompany));
         }
     }
