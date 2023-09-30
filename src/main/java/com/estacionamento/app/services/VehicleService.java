@@ -95,6 +95,17 @@ public class VehicleService {
         return vehicleDTO;
     }
 
+    public AllDataVehicle findVehicleByPlate(String plate) {
+        try {
+            Vehicle vehicle = vehicleRepository.findByPlate(plate);
+            AllDataVehicle allDataVehicle = generateAllDataVehicle(vehicle);
+
+            return allDataVehicle;
+        } catch (NoSuchElementException | NullPointerException exception) {
+            throw new NotFoundException(String.format("Vehicle not finded. Plate: %s", plate));
+        }
+    }
+
     public Vehicle updateVehicle(Long idVehicle, Vehicle vehicleUpdated) {
         try {
             Vehicle vehicleToUpdate = vehicleRepository.findById(idVehicle).get();

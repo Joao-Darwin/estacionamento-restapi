@@ -48,7 +48,19 @@ public class VehicleResource {
             AllDataVehicle vehicleDTO = vehicleService.findVehicleById(idVehicle);
 
             return ResponseEntity.status(HttpStatus.OK).body(vehicleDTO);
-        } catch (NotSaveException exception) {
+        } catch (NotFoundException exception) {
+            ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(errorResponse);
+        }
+    }
+
+    @GetMapping(value = "/findByPlate")
+    public ResponseEntity<?> findVehicleByPlate(@RequestParam("plate") String plate) {
+        try {
+            AllDataVehicle allDataVehicle = vehicleService.findVehicleByPlate(plate);
+
+            return ResponseEntity.status(HttpStatus.FOUND).body(allDataVehicle);
+        } catch (NotFoundException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(errorResponse);
         }
