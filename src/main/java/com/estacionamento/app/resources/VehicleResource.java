@@ -1,6 +1,7 @@
 package com.estacionamento.app.resources;
 
 import com.estacionamento.app.entities.Vehicle;
+import com.estacionamento.app.entities.dtos.responses.AllDataVehicle;
 import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
 import com.estacionamento.app.entities.dtos.responses.VehicleDTO;
 import com.estacionamento.app.exceptions.NotFoundException;
@@ -38,6 +39,18 @@ public class VehicleResource {
             return ResponseEntity.status(HttpStatus.FOUND).body(vehicles);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> findVehicleById(@PathVariable("id") Long idVehicle) {
+        try {
+            AllDataVehicle vehicleDTO = vehicleService.findVehicleById(idVehicle);
+
+            return ResponseEntity.status(HttpStatus.OK).body(vehicleDTO);
+        } catch (NotSaveException exception) {
+            ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(errorResponse);
         }
     }
 

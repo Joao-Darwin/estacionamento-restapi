@@ -2,6 +2,7 @@ package com.estacionamento.app.services;
 
 import com.estacionamento.app.entities.Company;
 import com.estacionamento.app.entities.Vehicle;
+import com.estacionamento.app.entities.dtos.responses.AllDataVehicle;
 import com.estacionamento.app.entities.dtos.responses.CompanyDTO;
 import com.estacionamento.app.entities.dtos.responses.VehicleDTO;
 import com.estacionamento.app.entities.enums.VehiclesType;
@@ -26,7 +27,7 @@ public class VehicleService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public Vehicle saveVehicle(Vehicle vehicle) throws NotSaveException{
+    public Vehicle saveVehicle(Vehicle vehicle) throws NotSaveException {
         try {
             checkIfParkingIsAvailable(vehicle);
 
@@ -42,12 +43,12 @@ public class VehicleService {
         Long companyId = vehicle.getCompany().getId();
         Company companyVehicle = companyRepository.findById(companyId).get();
 
-        if(typeVehicle == VehiclesType.CAR) {
-            if(companyVehicle.verifySpacesCarIsFull()){
+        if (typeVehicle == VehiclesType.CAR) {
+            if (companyVehicle.verifySpacesCarIsFull()) {
                 throw new NotSaveException("Car does not save, parking's company is full!");
             }
         } else {
-            if(companyVehicle.verifySpacesMotorcyclesIsFull()) {
+            if (companyVehicle.verifySpacesMotorcyclesIsFull()) {
                 throw new NotSaveException("Motorcycle does not save, parking's company is full!");
             }
         }
@@ -63,12 +64,38 @@ public class VehicleService {
     }
 
     private void generatedAllVehiclesDTO(List<Vehicle> allVehicles, List<VehicleDTO> allVehiclesDTO) {
-        for(Vehicle vehicle: allVehicles) {
+        for (Vehicle vehicle : allVehicles) {
             CompanyDTO companyDTO = new CompanyDTO(vehicle.getCompany().getId(), vehicle.getCompany().getName());
             VehicleDTO vehicleDTO = new VehicleDTO(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getType(), companyDTO);
 
             allVehiclesDTO.add(vehicleDTO);
         }
+    }
+
+    public AllDataVehicle findVehicleById(Long idVehicle) {
+        try {
+            Vehicle vehicle = vehicleRepository.findById(idVehicle).get();
+            AllDataVehicle vehicleDTO = generateAllDataVehicle(vehicle);
+
+            return vehicleDTO;
+        } catch (NoSuchElementException exception) {
+            throw new NotFoundException(String.format("Vehicle not finded. Id: %d", idVehicle));
+        }
+    }
+
+    private AllDataVehicle generateAllDataVehicle(Vehicle vehicle) {
+        Company company = vehicle.getCompany();
+        CompanyDTO companyDTO = new CompanyDTO(company.getId(), company.getName());
+        AllDataVehicle vehicleDTO = new AllDataVehicle(vehicle.getId(),
+                vehicle.getBrand(),
+                vehicle.getModel(),
+                vehicle.getColor(),
+                vehicle.getPlate(),
+                vehicle.getEntryDate(),
+                vehicle.getType(),
+                companyDTO);
+
+        return vehicleDTO;
     }
 
     public Vehicle updateVehicle(Long idVehicle, Vehicle vehicleUpdated) {
