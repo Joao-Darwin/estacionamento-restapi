@@ -27,6 +27,9 @@ public class UserResource {
         } catch (NotSaveException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(errorResponse);
+        } catch (Exception exception) {
+            ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
@@ -59,7 +62,7 @@ public class UserResource {
     public ResponseEntity<?> removeUser(@PathVariable Long id) {
         try {
             userService.removeUser(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.status(HttpStatus.OK).build();
         } catch (NotFoundException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
