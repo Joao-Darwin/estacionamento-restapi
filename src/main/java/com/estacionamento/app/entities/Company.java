@@ -3,11 +3,15 @@ package com.estacionamento.app.entities;
 import com.estacionamento.app.entities.enums.VehiclesType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Entity
 public class Company implements Serializable {
 
@@ -15,90 +19,28 @@ public class Company implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false)
     private String name;
+    @Setter
     @Column(unique = true, nullable = false)
     private String cnpj;
+    @Setter
     @Column(nullable = false)
     private String address;
+    @Setter
     @Column(nullable = false)
     private String phone;
+    @Setter
     @Column(nullable = false)
     private int spacesForCars;
+    @Setter
     @Column(nullable = false)
     private int spacesForMotorcycles;
 
     @JsonIgnore
     @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
     private List<Vehicle> vehicles = new ArrayList<>();
-
-    public Company() {
-    }
-
-    public Company(String name, String cnpj, String address, String phone, int spacesForCars, int spacesForMotorcycles) {
-        this.name = name;
-        this.cnpj = cnpj;
-        this.address = address;
-        this.phone = phone;
-        this.spacesForCars = spacesForCars;
-        this.spacesForMotorcycles = spacesForMotorcycles;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public int getSpacesForCars() {
-        return spacesForCars;
-    }
-
-    public void setSpacesForCars(int spacesForCars) {
-        this.spacesForCars = spacesForCars;
-    }
-
-    public int getSpacesForMotorcycles() {
-        return spacesForMotorcycles;
-    }
-
-    public void setSpacesForMotorcycles(int spacesForMotorcycles) {
-        this.spacesForMotorcycles = spacesForMotorcycles;
-    }
-
-    public List<Vehicle> getVehicles() {
-        return vehicles;
-    }
 
     public boolean verifySpacesCarIsFull() {
         int numberCarOnSpaces = 0;
