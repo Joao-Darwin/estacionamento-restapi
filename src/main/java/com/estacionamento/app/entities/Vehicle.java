@@ -3,10 +3,13 @@ package com.estacionamento.app.entities;
 import com.estacionamento.app.entities.enums.VehiclesType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
 
+@Getter
 @Entity
 public class Vehicle implements Serializable {
 
@@ -14,87 +17,25 @@ public class Vehicle implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false)
     private String brand;
+    @Setter
     @Column(nullable = false)
     private String model;
+    @Setter
     @Column(nullable = false)
     private String color;
+    @Setter
     @Column(nullable = false, unique = true)
     private String plate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT-3")
     private Instant entryDate = Instant.now();
+    @Setter
     @Column(nullable = false)
     private VehiclesType type;
 
+    @Setter
     @ManyToOne
     private Company company;
-
-    public Vehicle() {
-    }
-
-    public Vehicle(String brand, String model, String color, String plate, VehiclesType type, Company company) {
-        this.brand = brand;
-        this.model = model;
-        this.color = color;
-        this.plate = plate;
-        this.type = type;
-        this.company = company;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getPlate() {
-        return plate;
-    }
-
-    public void setPlate(String plate) {
-        this.plate = plate;
-    }
-
-    public Instant getEntryDate() {
-        return entryDate;
-    }
-
-    public VehiclesType getType() {
-        return type;
-    }
-
-    public void setType(VehiclesType type) {
-        this.type = type;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
 }
