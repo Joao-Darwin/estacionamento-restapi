@@ -57,7 +57,7 @@ public class CompanyService {
 
             return allVehiclesDTO;
         } catch (NoSuchElementException exception) {
-            throw new NotFoundException(String.format("Company not finded. Id: %d", idCompany));
+            throw new NotFoundException(String.format("Company not found. Id: %d", idCompany));
         }
     }
 
@@ -78,7 +78,7 @@ public class CompanyService {
             companyRepository.save(companyToUpdate);
             return companyToUpdate;
         } catch (NoSuchElementException exception) {
-            throw new NotFoundException(String.format("Company to update not finded. Id: %d", idCompany));
+            throw new NotFoundException(String.format("Company to update not found. Id: %d", idCompany));
         }
     }
 
@@ -95,7 +95,7 @@ public class CompanyService {
         try {
             companyRepository.deleteById(idCompany);
         } catch (NoSuchElementException exception) {
-            throw new NotFoundException(String.format("Company to remove not finded. Id: %d", idCompany));
+            throw new NotFoundException(String.format("Company to remove not found. Id: %d", idCompany));
         }
     }
 }

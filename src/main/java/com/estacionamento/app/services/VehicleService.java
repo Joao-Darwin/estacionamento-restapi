@@ -79,7 +79,7 @@ public class VehicleService {
 
             return vehicleDTO;
         } catch (NoSuchElementException exception) {
-            throw new NotFoundException(String.format("Vehicle not finded. Id: %d", idVehicle));
+            throw new NotFoundException(String.format("Vehicle not found. Id: %d", idVehicle));
         }
     }
 
@@ -102,7 +102,7 @@ public class VehicleService {
 
             return allDataVehicle;
         } catch (NoSuchElementException | NullPointerException exception) {
-            throw new NotFoundException(String.format("Vehicle not finded. Plate: %s", plate));
+            throw new NotFoundException(String.format("Vehicle not found. Plate: %s", plate));
         }
     }
 
@@ -115,7 +115,7 @@ public class VehicleService {
             vehicleRepository.save(vehicleToUpdate);
             return vehicleToUpdate;
         } catch (NoSuchElementException exception) {
-            throw new NotFoundException(String.format("Vehicle to update not finded. Id: %d", idVehicle));
+            throw new NotFoundException(String.format("Vehicle to update not found. Id: %d", idVehicle));
         } catch (DataIntegrityViolationException exception) {
             throw new NotSaveException("Vehicle does not save, vehicle already exists");
         }
@@ -134,7 +134,7 @@ public class VehicleService {
         try {
             vehicleRepository.deleteById(idVehicle);
         } catch (NoSuchElementException exception) {
-            throw new NotFoundException(String.format("Vehicle to remove not finded. Id: %d", idVehicle));
+            throw new NotFoundException(String.format("Vehicle to remove not found. Id: %d", idVehicle));
         }
     }
 }
