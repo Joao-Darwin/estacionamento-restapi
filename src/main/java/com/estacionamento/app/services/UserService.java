@@ -6,6 +6,7 @@ import com.estacionamento.app.exceptions.NotSaveException;
 import com.estacionamento.app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +18,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     public User saveUser(User user) {
         try {
+            user.setPassword(encoder.encode(user.getPassword()));
             user = userRepository.save(user);
             return user;
         } catch (DataIntegrityViolationException exception) {
