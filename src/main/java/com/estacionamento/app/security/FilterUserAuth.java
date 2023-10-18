@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -19,6 +20,9 @@ public class FilterUserAuth extends OncePerRequestFilter {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -63,6 +67,6 @@ public class FilterUserAuth extends OncePerRequestFilter {
 
     private boolean userHasPasswordCurrent(UserDTO userDTO) {
         User user = userRepository.findByEmail(userDTO.email());
-        return user.getPassword().equals(userDTO.password());
+        return encoder.matches(userDTO.password(), user.getPassword());
     }
 }
