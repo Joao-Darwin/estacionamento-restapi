@@ -1,4 +1,4 @@
-package com.estacionamento.app.resources;
+package com.estacionamento.app.resources.companies.impl;
 
 import com.estacionamento.app.entities.Company;
 import com.estacionamento.app.entities.dtos.responses.DataCompanyDTO;
@@ -6,6 +6,7 @@ import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
 import com.estacionamento.app.entities.dtos.responses.OnlyVehicleDTO;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
+import com.estacionamento.app.resources.companies.ICompanyResource;
 import com.estacionamento.app.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/companies")
-public class CompanyResource {
+public class CompanyResource implements ICompanyResource {
 
     @Autowired
     private CompanyService companyService;

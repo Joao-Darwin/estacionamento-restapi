@@ -1,9 +1,10 @@
-package com.estacionamento.app.resources;
+package com.estacionamento.app.resources.users.impl;
 
 import com.estacionamento.app.entities.User;
 import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
+import com.estacionamento.app.resources.users.IUserResource;
 import com.estacionamento.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
-public class UserResource {
+public class UserResource implements IUserResource {
 
     @Autowired
     private UserService userService;

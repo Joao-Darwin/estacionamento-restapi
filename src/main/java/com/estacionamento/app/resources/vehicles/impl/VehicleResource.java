@@ -1,4 +1,4 @@
-package com.estacionamento.app.resources;
+package com.estacionamento.app.resources.vehicles.impl;
 
 import com.estacionamento.app.entities.Vehicle;
 import com.estacionamento.app.entities.dtos.responses.AllDataVehicle;
@@ -6,6 +6,7 @@ import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
 import com.estacionamento.app.entities.dtos.responses.VehicleDTO;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
+import com.estacionamento.app.resources.vehicles.IVehicleResource;
 import com.estacionamento.app.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/vehicles")
-public class VehicleResource {
+public class VehicleResource implements IVehicleResource {
 
     @Autowired
     private VehicleService vehicleService;
