@@ -18,6 +18,11 @@ import java.util.Base64;
 @Component
 public class FilterUserAuth extends OncePerRequestFilter {
 
+    private static final String HEADER_AUTHORIZATION = "Authorization";
+    private static final String POST_METHOD_REQUEST = "POST";
+    private static final String PATH_API_DOCUMENTATION = "/swagger-ui";
+    private static final String PATH_USER_RESOURCE = "/users";
+
     @Autowired
     private UserRepository userRepository;
 
@@ -43,15 +48,15 @@ public class FilterUserAuth extends OncePerRequestFilter {
     }
 
     private boolean isServletPathRequestWithoutFilterAuthorization(String servletPathRequest, String methodRequest) {
-        if(servletPathRequest.startsWith("/swagger-ui")) {
+        if(servletPathRequest.startsWith(PATH_API_DOCUMENTATION)) {
             return true;
         }
 
-        return servletPathRequest.startsWith("/users") && methodRequest.equals("POST");
+        return servletPathRequest.startsWith(PATH_USER_RESOURCE) && methodRequest.equals(POST_METHOD_REQUEST);
     }
 
     private UserDTO getCredentialsUser(HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(HEADER_AUTHORIZATION);
 
         String authEncoder = authorization.replaceAll("^Basic\\h", "");
         String authDecoder = new String(Base64.getDecoder().decode(authEncoder));
