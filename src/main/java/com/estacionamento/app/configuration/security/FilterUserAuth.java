@@ -23,6 +23,7 @@ public class FilterUserAuth extends OncePerRequestFilter {
     private static final String POST_METHOD_REQUEST = "POST";
     private static final String PATH_H2_DATABASE = "/h2-console";
     private static final String PATH_API_DOCUMENTATION = "/swagger-ui";
+    private static final String PATH_V3_API_DOCS = "/v3/api-docs";
     private static final String PATH_USER_RESOURCE = "/users";
 
     @Autowired
@@ -53,7 +54,7 @@ public class FilterUserAuth extends OncePerRequestFilter {
     }
 
     private boolean isServletPathRequestWithoutFilterAuthorization(String servletPathRequest, String methodRequest) {
-        if (servletPathRequest.startsWith(PATH_API_DOCUMENTATION)) {
+        if (servletPathRequest.startsWith(PATH_API_DOCUMENTATION) || servletPathRequest.startsWith(PATH_V3_API_DOCS)) {
             return true;
         }
 
