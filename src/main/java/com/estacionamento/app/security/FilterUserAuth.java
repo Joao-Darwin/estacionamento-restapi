@@ -30,7 +30,7 @@ public class FilterUserAuth extends OncePerRequestFilter {
         String servletPathRequest = request.getServletPath();
         String methodRequest = request.getMethod();
 
-        if(servletPathRequest.contains("users") && methodRequest.equals("POST")) {
+        if(isServletPathRequestWithoutFilterAuthorization(servletPathRequest, methodRequest)) {
             filterChain.doFilter(request, response);
         } else {
             UserDTO userCredentials = getCredentialsUser(request);
@@ -40,6 +40,14 @@ public class FilterUserAuth extends OncePerRequestFilter {
                 response.sendError(401, "User dont authorization");
             }
         }
+    }
+
+    private boolean isServletPathRequestWithoutFilterAuthorization(String servletPathRequest, String methodRequest) {
+        if(servletPathRequest.startsWith("/swagger-ui")) {
+            return true;
+        }
+
+        return servletPathRequest.startsWith("/users") && methodRequest.equals("POST");
     }
 
     private UserDTO getCredentialsUser(HttpServletRequest request) {
