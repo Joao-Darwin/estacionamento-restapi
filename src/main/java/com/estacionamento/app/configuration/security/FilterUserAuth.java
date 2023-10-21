@@ -1,4 +1,4 @@
-package com.estacionamento.app.configuration.swagger.security;
+package com.estacionamento.app.configuration.security;
 
 import com.estacionamento.app.entities.User;
 import com.estacionamento.app.entities.dtos.responses.UserDTO;
