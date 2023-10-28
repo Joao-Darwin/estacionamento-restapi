@@ -58,11 +58,7 @@ public class FilterUserAuth extends OncePerRequestFilter {
             return true;
         }
 
-        if (servletPathRequest.startsWith(PATH_H2_DATABASE)) {
-            return true;
-        }
-
-        return servletPathRequest.startsWith(PATH_USER_RESOURCE) && methodRequest.equals(POST_METHOD_REQUEST);
+        return servletPathRequest.startsWith(PATH_H2_DATABASE);
     }
 
     private UserDTO getCredentialsUser(HttpServletRequest request) {
