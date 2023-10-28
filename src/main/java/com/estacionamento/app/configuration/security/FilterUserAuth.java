@@ -34,22 +34,22 @@ public class FilterUserAuth extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
-            String servletPathRequest = request.getServletPath();
-            String methodRequest = request.getMethod();
+        String servletPathRequest = request.getServletPath();
+        String methodRequest = request.getMethod();
 
-            if (isServletPathRequestWithoutFilterAuthorization(servletPathRequest, methodRequest)) {
-                filterChain.doFilter(request, response);
-            } else {
+        if (isServletPathRequestWithoutFilterAuthorization(servletPathRequest, methodRequest)) {
+            filterChain.doFilter(request, response);
+        } else {
+            try {
                 UserDTO userCredentials = getCredentialsUser(request);
                 if (verifyCredentialsUser(userCredentials)) {
                     filterChain.doFilter(request, response);
                 } else {
                     response.sendError(401, "User dont authorization");
                 }
+            } catch (CredentialsUserIsNullException exception) {
+                response.sendError(401, exception.getMessage());
             }
-        } catch (CredentialsUserIsNullException exception) {
-            response.sendError(401, exception.getMessage());
         }
     }
 
