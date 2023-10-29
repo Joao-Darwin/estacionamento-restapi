@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-@Tag(name = "Company Resources", description = "Resources to companies")
+@Tag(name = "Company", description = "Resources to companies")
 public interface ICompanyResource {
 
     @Operation(summary = "Save a company")
