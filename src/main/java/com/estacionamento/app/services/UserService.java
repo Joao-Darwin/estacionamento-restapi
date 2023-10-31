@@ -1,6 +1,7 @@
 package com.estacionamento.app.services;
 
 import com.estacionamento.app.entities.User;
+import com.estacionamento.app.entities.dtos.requests.UserChangePassword;
 import com.estacionamento.app.entities.dtos.requests.UserUpdateInfo;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
@@ -51,6 +52,18 @@ public class UserService {
     private void updateDataUser(User userToUpdate, UserUpdateInfo userUpdated) {
         userToUpdate.setName(userUpdated.name());
         userToUpdate.setEmail(userUpdated.email());
+    }
+
+    public User changePasswordUser(Long id, UserChangePassword userChangePassword) {
+        try {
+            User userToChangePassword = userRepository.findById(id).get();
+
+            userToChangePassword.setPassword(encoder.encode(userChangePassword.password()));
+
+            return userRepository.save(userToChangePassword);
+        } catch (NoSuchElementException exception) {
+            throw new NotFoundException(String.format("User does not remove, not find. Id: %d", id));
+        }
     }
 
     public void removeUser(Long id) {
