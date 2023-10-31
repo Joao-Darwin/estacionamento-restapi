@@ -1,7 +1,7 @@
 package com.estacionamento.app.services;
 
 import com.estacionamento.app.entities.User;
-import com.estacionamento.app.entities.dtos.requests.UserChangePassword;
+import com.estacionamento.app.entities.dtos.requests.UserPassword;
 import com.estacionamento.app.entities.dtos.requests.UserUpdateInfo;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
@@ -54,11 +54,11 @@ public class UserService {
         userToUpdate.setEmail(userUpdated.email());
     }
 
-    public User changePasswordUser(Long id, UserChangePassword userChangePassword) {
+    public User changePasswordUser(Long id, UserPassword userWithNewPassword) {
         try {
             User userToChangePassword = userRepository.findById(id).get();
 
-            userToChangePassword.setPassword(encoder.encode(userChangePassword.password()));
+            userToChangePassword.setPassword(encoder.encode(userWithNewPassword.password()));
 
             return userRepository.save(userToChangePassword);
         } catch (NoSuchElementException exception) {

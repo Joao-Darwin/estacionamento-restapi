@@ -1,7 +1,7 @@
 package com.estacionamento.app.resources.users;
 
 import com.estacionamento.app.entities.User;
-import com.estacionamento.app.entities.dtos.requests.UserChangePassword;
+import com.estacionamento.app.entities.dtos.requests.UserPassword;
 import com.estacionamento.app.entities.dtos.requests.UserUpdateInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -47,7 +47,7 @@ public interface IUserResource {
             @ApiResponse(responseCode = "401", description = "Don't Authorization", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
-    ResponseEntity<?> changePasswordUser(@Parameter(description = "user id") Long id, @RequestBody UserChangePassword userChangePassword);
+    ResponseEntity<?> changePasswordUser(@Parameter(description = "user id") Long id, @RequestBody UserPassword userWithNewPassword);
 
     @Operation(summary = "Remove User")
     @ApiResponses(value = {

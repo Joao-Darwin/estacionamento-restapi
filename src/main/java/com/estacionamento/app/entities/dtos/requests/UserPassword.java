@@ -1,4 +1,4 @@
 package com.estacionamento.app.entities.dtos.requests;
 
-public record UserChangePassword(String password) {
+public record UserPassword(String password) {
 }

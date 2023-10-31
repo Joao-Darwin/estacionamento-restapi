@@ -1,7 +1,7 @@
 package com.estacionamento.app.resources.users.impl;
 
 import com.estacionamento.app.entities.User;
-import com.estacionamento.app.entities.dtos.requests.UserChangePassword;
+import com.estacionamento.app.entities.dtos.requests.UserPassword;
 import com.estacionamento.app.entities.dtos.requests.UserUpdateInfo;
 import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
 import com.estacionamento.app.exceptions.NotFoundException;
@@ -62,9 +62,9 @@ public class UserResource implements IUserResource {
     }
 
     @PutMapping("/{id}/passwordChange")
-    public ResponseEntity<?> changePasswordUser(@PathVariable Long id, @RequestBody UserChangePassword userChangePassword) {
+    public ResponseEntity<?> changePasswordUser(@PathVariable Long id, @RequestBody UserPassword userWithNewPassword) {
         try {
-            User updatedUser = userService.changePasswordUser(id, userChangePassword);
+            User updatedUser = userService.changePasswordUser(id, userWithNewPassword);
             return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
         } catch (NotFoundException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
