@@ -1,6 +1,7 @@
 package com.estacionamento.app.services;
 
 import com.estacionamento.app.entities.User;
+import com.estacionamento.app.entities.dtos.requests.UserUpdateInfo;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
 import com.estacionamento.app.repositories.UserRepository;
@@ -35,7 +36,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User updateUser(Long id, User userUpdated) {
+    public User updateUser(Long id, UserUpdateInfo userUpdated) {
         try {
             User userToUpdate = userRepository.findById(id).get();
 
@@ -47,11 +48,9 @@ public class UserService {
         }
     }
 
-    private void updateDataUser(User userToUpdate, User userUpdated) {
-        userToUpdate.setName(userUpdated.getName());
-        userToUpdate.setEmail(userUpdated.getEmail());
-        userToUpdate.setPassword(userUpdated.getPassword());
-        userToUpdate.setRole(userUpdated.getRole());
+    private void updateDataUser(User userToUpdate, UserUpdateInfo userUpdated) {
+        userToUpdate.setName(userUpdated.name());
+        userToUpdate.setEmail(userUpdated.email());
     }
 
     public void removeUser(Long id) {

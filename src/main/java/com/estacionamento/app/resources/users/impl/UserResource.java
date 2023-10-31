@@ -1,6 +1,7 @@
 package com.estacionamento.app.resources.users.impl;
 
 import com.estacionamento.app.entities.User;
+import com.estacionamento.app.entities.dtos.requests.UserUpdateInfo;
 import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
@@ -46,7 +47,7 @@ public class UserResource implements IUserResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User userUpdated) {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserUpdateInfo userUpdated) {
         try {
             User updatedUser = userService.updateUser(id, userUpdated);
             return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
