@@ -20,11 +20,9 @@ import java.util.Base64;
 public class FilterUserAuth extends OncePerRequestFilter {
 
     private static final String HEADER_AUTHORIZATION = "Authorization";
-    private static final String POST_METHOD_REQUEST = "POST";
     private static final String PATH_H2_DATABASE = "/h2-console";
     private static final String PATH_API_DOCUMENTATION = "/swagger-ui";
     private static final String PATH_V3_API_DOCS = "/v3/api-docs";
-    private static final String PATH_USER_RESOURCE = "/users";
 
     @Autowired
     private UserRepository userRepository;
@@ -35,9 +33,8 @@ public class FilterUserAuth extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String servletPathRequest = request.getServletPath();
-        String methodRequest = request.getMethod();
 
-        if (isServletPathRequestWithoutFilterAuthorization(servletPathRequest, methodRequest)) {
+        if (isServletPathRequestWithoutFilterAuthorization(servletPathRequest)) {
             filterChain.doFilter(request, response);
         } else {
             try {
@@ -53,7 +50,7 @@ public class FilterUserAuth extends OncePerRequestFilter {
         }
     }
 
-    private boolean isServletPathRequestWithoutFilterAuthorization(String servletPathRequest, String methodRequest) {
+    private boolean isServletPathRequestWithoutFilterAuthorization(String servletPathRequest) {
         if (servletPathRequest.startsWith(PATH_API_DOCUMENTATION) || servletPathRequest.startsWith(PATH_V3_API_DOCS)) {
             return true;
         }
