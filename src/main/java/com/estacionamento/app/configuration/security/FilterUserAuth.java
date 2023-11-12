@@ -24,11 +24,14 @@ public class FilterUserAuth extends OncePerRequestFilter {
     private static final String PATH_API_DOCUMENTATION = "/swagger-ui";
     private static final String PATH_V3_API_DOCS = "/v3/api-docs";
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    private PasswordEncoder encoder;
+    public FilterUserAuth(UserRepository userRepository, PasswordEncoder encoder) {
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
