@@ -27,7 +27,7 @@ public class SeedUserDatabase implements CommandLineRunner {
         user.setName("Admin");
         user.setEmail("admin@admin.com");
         user.setPassword(passwordEncoder.encode("admin@123"));
-        user.setRole(UserJobRole.ADMIN);
+        user.setRole(UserJobRole.SUPER_ADMIN);
 
         userRepository.save(user);
     }
