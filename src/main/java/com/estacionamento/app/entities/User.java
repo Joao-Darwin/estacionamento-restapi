@@ -16,6 +16,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Setter
     private String name;
     @Setter
@@ -27,4 +28,7 @@ public class User implements Serializable {
 
     @Setter
     private UserJobRole role;
+
+    @ManyToOne
+    private Company company;
 }

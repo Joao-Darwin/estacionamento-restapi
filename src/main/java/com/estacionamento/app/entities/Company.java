@@ -42,6 +42,10 @@ public class Company implements Serializable {
     @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
     private List<Vehicle> vehicles = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
+    private List<User> users = new ArrayList<>();
+
     public boolean verifySpacesCarIsFull() {
         int numberCarOnSpaces = 0;
 
