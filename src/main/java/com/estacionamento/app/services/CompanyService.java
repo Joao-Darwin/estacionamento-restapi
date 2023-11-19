@@ -46,7 +46,6 @@ public class CompanyService {
         }
     }
 
-
     public List<OnlyVehicleDTO> findAllVehiclesByCompany(Long idCompany) {
         try {
             Company company = companyRepository.findById(idCompany).get();
@@ -66,6 +65,26 @@ public class CompanyService {
             OnlyVehicleDTO vehicleDTO = new OnlyVehicleDTO(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getType());
 
             allVehiclesDTO.add(vehicleDTO);
+        }
+    }
+
+    public List<OnlyVehicleDTO> findAllVehiclesOnCompanyParking(Long idCompany) {
+        try {
+            Company company = companyRepository.findById(idCompany).get();
+            List<Vehicle> allVehicles = company.getVehicles();
+            List<OnlyVehicleDTO> allVehiclesOnCompanyParkingDTO = new ArrayList<>();
+
+            for(Vehicle vehicle : allVehicles) {
+               if(!vehicle.isLeave()) {
+                   OnlyVehicleDTO vehicleDTO = new OnlyVehicleDTO(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getType());
+
+                   allVehiclesOnCompanyParkingDTO.add(vehicleDTO);
+               }
+            }
+
+            return allVehiclesOnCompanyParkingDTO;
+        } catch (NoSuchElementException exception) {
+            throw new NotFoundException(String.format("Company not found. Id: %d", idCompany));
         }
     }
 

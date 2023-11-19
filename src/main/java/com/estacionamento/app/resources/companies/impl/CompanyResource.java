@@ -54,6 +54,17 @@ public class CompanyResource implements ICompanyResource {
         }
     }
 
+    @GetMapping(value = "/{id}/parking/vehicles")
+    public ResponseEntity<?> findVehiclesOnCompanyParking(@PathVariable Long id) {
+        try {
+            List<OnlyVehicleDTO> vehicles = companyService.findAllVehiclesOnCompanyParking(id);
+            return ResponseEntity.status(HttpStatus.OK).body(vehicles);
+        } catch (NotFoundException exception) {
+            ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(errorResponse);
+        }
+    }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateCompany(@PathVariable(value = "id") Long idCompany, @RequestBody Company companyUpdated) {
         try {

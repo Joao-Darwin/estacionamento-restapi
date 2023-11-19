@@ -40,6 +40,15 @@ public interface ICompanyResource {
     })
     ResponseEntity<?> findVehiclesByCompany(@Parameter(description = "Company's Id") Long id);
 
+    @Operation(summary = "Find vehicles on company parking thar don't leave")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "404", description = "Company don't found"),
+            @ApiResponse(responseCode = "401", description = "User don't authorization"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    ResponseEntity<?> findVehiclesOnCompanyParking(@Parameter(description = "Company's Id") Long id);
+
     @Operation(summary = "Update company")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Company updated!"),
