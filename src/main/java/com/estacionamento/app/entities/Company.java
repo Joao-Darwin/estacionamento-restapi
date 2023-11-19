@@ -3,7 +3,6 @@ package com.estacionamento.app.entities;
 import com.estacionamento.app.entities.enums.VehiclesType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,7 +53,7 @@ public class Company implements Serializable {
         }
 
         for(Vehicle vehicle : vehicles) {
-            if(vehicle.getType() == VehiclesType.CAR) {
+            if(vehicle.getType() == VehiclesType.CAR && !vehicle.isLeave()) {
                 numberCarOnSpaces += 1;
             }
         }
@@ -70,7 +69,7 @@ public class Company implements Serializable {
         }
 
         for(Vehicle vehicle : vehicles) {
-            if(vehicle.getType() == VehiclesType.MOTORCYCLE) {
+            if(vehicle.getType() == VehiclesType.MOTORCYCLE && !vehicle.isLeave()) {
                 numberMotorcyclesOnSpaces += 1;
             }
         }
@@ -83,6 +82,12 @@ public class Company implements Serializable {
     }
 
     public int getOccupiedSpaces() {
-        return vehicles.size();
+        int countOccupiedSpaces = 0;
+
+        for(Vehicle vehicle : vehicles) {
+            if(!vehicle.isLeave()) countOccupiedSpaces++;
+        }
+
+        return countOccupiedSpaces;
     }
 }

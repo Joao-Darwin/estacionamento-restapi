@@ -11,6 +11,7 @@ import java.time.Instant;
 
 @Getter
 @Entity
+@Table(name = "vehicles", uniqueConstraints = @UniqueConstraint(columnNames = {"plate", "entrydate"}))
 public class Vehicle implements Serializable {
 
     @Id
@@ -20,17 +21,29 @@ public class Vehicle implements Serializable {
     @Setter
     @Column(nullable = false)
     private String brand;
+
     @Setter
     @Column(nullable = false)
     private String model;
+
     @Setter
     @Column(nullable = false)
     private String color;
+
     @Setter
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String plate;
+
+    @Setter
+    private boolean leave = false;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT-3")
     private Instant entryDate = Instant.now();
+
+    @Setter
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT-3")
+    private Instant departureDate = null;
+
     @Setter
     @Column(nullable = false)
     private VehiclesType type;

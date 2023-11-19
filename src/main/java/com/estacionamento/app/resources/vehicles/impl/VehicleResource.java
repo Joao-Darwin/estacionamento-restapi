@@ -59,9 +59,9 @@ public class VehicleResource implements IVehicleResource {
     @GetMapping(value = "/findByPlate")
     public ResponseEntity<?> findVehicleByPlate(@RequestParam("plate") String plate) {
         try {
-            AllDataVehicle allDataVehicle = vehicleService.findVehicleByPlate(plate);
+            List<AllDataVehicle> allDataVehicles = vehicleService.findVehicleByPlate(plate);
 
-            return ResponseEntity.status(HttpStatus.FOUND).body(allDataVehicle);
+            return ResponseEntity.status(HttpStatus.FOUND).body(allDataVehicles);
         } catch (NotFoundException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(errorResponse);
@@ -76,6 +76,17 @@ public class VehicleResource implements IVehicleResource {
         } catch (NotFoundException | NotSaveException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(errorResponse);
+        }
+    }
+
+    @DeleteMapping(value = "/checkOut/{id}")
+    public ResponseEntity<?> checkOutVehicle(@PathVariable Long id) {
+        try {
+            vehicleService.checkOutVehicle(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (NotFoundException exception) {
+            ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(errorResponse);
         }
     }
 

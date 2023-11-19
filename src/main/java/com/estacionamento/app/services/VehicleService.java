@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -85,23 +86,28 @@ public class VehicleService {
     }
 
     private AllDataVehicle generateAllDataVehicle(Vehicle vehicle) {
-        AllDataVehicle vehicleDTO = new AllDataVehicle(vehicle.getId(),
+        return new AllDataVehicle(vehicle.getId(),
                 vehicle.getBrand(),
                 vehicle.getModel(),
                 vehicle.getColor(),
                 vehicle.getPlate(),
+                vehicle.isLeave(),
                 vehicle.getEntryDate(),
+                vehicle.getDepartureDate(),
                 vehicle.getType());
-
-        return vehicleDTO;
     }
 
-    public AllDataVehicle findVehicleByPlate(String plate) {
+    public List<AllDataVehicle> findVehicleByPlate(String plate) {
         try {
-            Vehicle vehicle = vehicleRepository.findByPlate(plate);
-            AllDataVehicle allDataVehicle = generateAllDataVehicle(vehicle);
+            List<Vehicle> vehicles = vehicleRepository.findByPlate(plate);
+            List<AllDataVehicle> allDataVehicles = new ArrayList<>();
 
-            return allDataVehicle;
+            for(Vehicle vehicle : vehicles) {
+                AllDataVehicle allDataVehicle = generateAllDataVehicle(vehicle);
+                allDataVehicles.add(allDataVehicle);
+            }
+
+            return allDataVehicles;
         } catch (NoSuchElementException | NullPointerException exception) {
             throw new NotFoundException(String.format("Vehicle not found. Plate: %s", plate));
         }
@@ -129,6 +135,19 @@ public class VehicleService {
         vehicleToUpdate.setPlate(vehicleUpdated.getPlate());
         vehicleToUpdate.setType(vehicleUpdated.getType());
         vehicleToUpdate.setCompany(vehicleUpdated.getCompany());
+    }
+
+    public void checkOutVehicle(Long idVehicle) {
+        try {
+            Vehicle vehicle = vehicleRepository.findById(idVehicle).get();
+
+            vehicle.setLeave(true);
+            vehicle.setDepartureDate(Instant.now());
+
+            vehicleRepository.save(vehicle);
+        } catch (NoSuchElementException exception) {
+            throw new NotFoundException(String.format("Vehicle to remove not found. Id: %d", idVehicle));
+        }
     }
 
     public void deleteVehicle(Long idVehicle) {
