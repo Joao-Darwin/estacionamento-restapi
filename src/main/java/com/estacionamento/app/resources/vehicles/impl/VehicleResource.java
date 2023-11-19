@@ -71,8 +71,8 @@ public class VehicleResource implements IVehicleResource {
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateVehicle(@PathVariable Long id, @RequestBody Vehicle vehicleUpdated) {
         try {
-            vehicleUpdated = vehicleService.updateVehicle(id, vehicleUpdated);
-            return ResponseEntity.status(HttpStatus.OK).body(vehicleUpdated);
+            OnlyVehicleDTO vehicleDTO = vehicleService.updateVehicle(id, vehicleUpdated);
+            return ResponseEntity.status(HttpStatus.OK).body(vehicleDTO);
         } catch (NotFoundException | NotSaveException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(errorResponse);

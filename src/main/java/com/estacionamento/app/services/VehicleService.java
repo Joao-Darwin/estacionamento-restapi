@@ -107,14 +107,14 @@ public class VehicleService {
         }
     }
 
-    public Vehicle updateVehicle(Long idVehicle, Vehicle vehicleUpdated) {
+    public OnlyVehicleDTO updateVehicle(Long idVehicle, Vehicle vehicleUpdated) {
         try {
             Vehicle vehicleToUpdate = vehicleRepository.findById(idVehicle).get();
 
             updateVehicleData(vehicleToUpdate, vehicleUpdated);
 
             vehicleRepository.save(vehicleToUpdate);
-            return vehicleToUpdate;
+            return new OnlyVehicleDTO(vehicleToUpdate.getId(), vehicleToUpdate.getModel(), vehicleToUpdate.getPlate(), vehicleToUpdate.getType());
         } catch (NoSuchElementException exception) {
             throw new NotFoundException(String.format("Vehicle to update not found. Id: %d", idVehicle));
         } catch (DataIntegrityViolationException exception) {
