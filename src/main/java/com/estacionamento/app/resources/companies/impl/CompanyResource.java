@@ -50,7 +50,7 @@ public class CompanyResource implements ICompanyResource {
             return ResponseEntity.status(HttpStatus.OK).body(vehicles);
         } catch (NotFoundException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 
@@ -61,7 +61,7 @@ public class CompanyResource implements ICompanyResource {
             return ResponseEntity.status(HttpStatus.OK).body(vehicles);
         } catch (NotFoundException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 
