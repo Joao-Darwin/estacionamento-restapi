@@ -43,7 +43,7 @@ public class CompanyResource implements ICompanyResource {
         }
     }
 
-    @GetMapping(value = "/{id}/vehicles")
+    @GetMapping(value = "/{id}/historic")
     public ResponseEntity<?> findVehiclesByCompany(@PathVariable Long id) {
         try {
             List<OnlyVehicleDTO> vehicles = companyService.findAllVehiclesByCompany(id);
@@ -54,7 +54,7 @@ public class CompanyResource implements ICompanyResource {
         }
     }
 
-    @GetMapping(value = "/{id}/parking/vehicles")
+    @GetMapping(value = "/{id}/parking")
     public ResponseEntity<?> findVehiclesOnCompanyParking(@PathVariable Long id) {
         try {
             List<OnlyVehicleDTO> vehicles = companyService.findAllVehiclesOnCompanyParking(id);
