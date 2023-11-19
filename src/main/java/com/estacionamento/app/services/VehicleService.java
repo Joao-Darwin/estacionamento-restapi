@@ -4,6 +4,7 @@ import com.estacionamento.app.entities.Company;
 import com.estacionamento.app.entities.Vehicle;
 import com.estacionamento.app.entities.dtos.responses.AllDataVehicle;
 import com.estacionamento.app.entities.dtos.responses.CompanyDTO;
+import com.estacionamento.app.entities.dtos.responses.OnlyVehicleDTO;
 import com.estacionamento.app.entities.dtos.responses.VehicleDTO;
 import com.estacionamento.app.entities.enums.VehiclesType;
 import com.estacionamento.app.exceptions.NotFoundException;
@@ -27,12 +28,12 @@ public class VehicleService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public Vehicle saveVehicle(Vehicle vehicle) throws NotSaveException {
+    public OnlyVehicleDTO saveVehicle(Vehicle vehicle) throws NotSaveException {
         try {
             checkIfParkingIsAvailable(vehicle);
 
             vehicleRepository.save(vehicle);
-            return vehicle;
+            return new OnlyVehicleDTO(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getType());
         } catch (DataIntegrityViolationException exception) {
             throw new NotSaveException("Vehicle does not save, vehicle already exists");
         }

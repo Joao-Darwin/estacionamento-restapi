@@ -3,6 +3,7 @@ package com.estacionamento.app.resources.vehicles.impl;
 import com.estacionamento.app.entities.Vehicle;
 import com.estacionamento.app.entities.dtos.responses.AllDataVehicle;
 import com.estacionamento.app.entities.dtos.responses.ErrorResponse;
+import com.estacionamento.app.entities.dtos.responses.OnlyVehicleDTO;
 import com.estacionamento.app.entities.dtos.responses.VehicleDTO;
 import com.estacionamento.app.exceptions.NotFoundException;
 import com.estacionamento.app.exceptions.NotSaveException;
@@ -25,8 +26,8 @@ public class VehicleResource implements IVehicleResource {
     @PostMapping
     public ResponseEntity<?> saveVehicle(@RequestBody Vehicle vehicle) {
         try {
-            vehicle = vehicleService.saveVehicle(vehicle);
-            return ResponseEntity.status(HttpStatus.CREATED).body(vehicle);
+            OnlyVehicleDTO vehicleDTO = vehicleService.saveVehicle(vehicle);
+            return ResponseEntity.status(HttpStatus.CREATED).body(vehicleDTO);
         } catch (NotSaveException exception) {
             ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(errorResponse);
