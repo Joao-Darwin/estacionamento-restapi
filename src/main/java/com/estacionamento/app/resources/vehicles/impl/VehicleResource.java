@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/vehicles")
+@RequestMapping(value = "/api/v1/vehicles")
 public class VehicleResource implements IVehicleResource {
 
     private final VehicleService vehicleService;

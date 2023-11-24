@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/companies")
+@RequestMapping(value = "/api/v1/companies")
 public class CompanyResource implements ICompanyResource {
 
     private final CompanyService companyService;
