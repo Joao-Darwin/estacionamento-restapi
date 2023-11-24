@@ -19,8 +19,12 @@ import java.util.List;
 @RequestMapping(value = "/companies")
 public class CompanyResource implements ICompanyResource {
 
+    private final CompanyService companyService;
+
     @Autowired
-    private CompanyService companyService;
+    CompanyResource(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     @PostMapping
     public ResponseEntity<?> saveCompany(@RequestBody Company company) {

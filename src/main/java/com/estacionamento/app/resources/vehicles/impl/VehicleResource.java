@@ -20,8 +20,12 @@ import java.util.List;
 @RequestMapping(value = "/vehicles")
 public class VehicleResource implements IVehicleResource {
 
+    private final VehicleService vehicleService;
+
     @Autowired
-    private VehicleService vehicleService;
+    VehicleResource(VehicleService vehicleService) {
+        this.vehicleService = vehicleService;
+    }
 
     @PostMapping
     public ResponseEntity<?> saveVehicle(@RequestBody Vehicle vehicle) {

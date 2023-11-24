@@ -19,8 +19,12 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserResource implements IUserResource {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    UserResource(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody User user) {
