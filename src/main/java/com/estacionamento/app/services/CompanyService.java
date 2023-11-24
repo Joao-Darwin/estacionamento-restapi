@@ -18,8 +18,12 @@ import java.util.NoSuchElementException;
 @Service
 public class CompanyService {
 
+    private final CompanyRepository companyRepository;
+
     @Autowired
-    private CompanyRepository companyRepository;
+    CompanyService(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
 
     public Company saveCompany(Company company) {
         try {

@@ -17,11 +17,14 @@ import java.util.NoSuchElementException;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    private PasswordEncoder encoder;
+    UserService(UserRepository userRepository, PasswordEncoder encoder) {
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
 
     public User saveUser(User user) {
         try {

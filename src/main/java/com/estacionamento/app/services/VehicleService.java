@@ -23,11 +23,14 @@ import java.util.NoSuchElementException;
 @Service
 public class VehicleService {
 
-    @Autowired
-    private VehicleRepository vehicleRepository;
+    private final VehicleRepository vehicleRepository;
+    private final CompanyRepository companyRepository;
 
     @Autowired
-    private CompanyRepository companyRepository;
+    VehicleService(VehicleRepository vehicleRepository, CompanyRepository companyRepository) {
+        this.vehicleRepository = vehicleRepository;
+        this.companyRepository = companyRepository;
+    }
 
     public OnlyVehicleDTO saveVehicle(Vehicle vehicle) throws NotSaveException {
         try {
