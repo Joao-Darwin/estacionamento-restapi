@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/users")
+@RequestMapping(value = "${data.baseurl}/users")
 public class UserResource implements IUserResource {
 
     private final UserService userService;
