@@ -4,6 +4,7 @@
 
   [![GitHub License](https://img.shields.io/github/license/Joao-Darwin/parking-api?style=for-the-badge)](https://github.com/Joao-Darwin/parking-api/blob/main/LICENSE)
   ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=COMPLETED&color=GREEN&style=for-the-badge)
+  [![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/Joao-Darwin/parking-api?style=for-the-badge&color=purple)](https://github.com/Joao-Darwin/parking-api/issues?q=is%3Aissue+is%3Aclosed)
 </div>
 
 # Índice 
