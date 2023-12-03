@@ -3,7 +3,7 @@
 <div align="center" id="badges">
 
   [![GitHub License](https://img.shields.io/github/license/Joao-Darwin/parking-api?style=for-the-badge)](https://github.com/Joao-Darwin/parking-api/blob/main/LICENSE)
-  ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
+  ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=COMPLETED&color=GREEN&style=for-the-badge)
 </div>
 
 # Índice 
