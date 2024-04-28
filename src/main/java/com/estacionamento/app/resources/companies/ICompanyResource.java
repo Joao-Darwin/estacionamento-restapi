@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public interface ICompanyResource {
             @ApiResponse(responseCode = "401", description = "User don't authorization"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    ResponseEntity<List<DataCompanyDTO>> findAll();
+    ResponseEntity<Page<DataCompanyDTO>> findAll(@Parameter(description = "Page") int page, @Parameter(description = "Size of page") int size, @Parameter(description = "Ordination page") String sort);
 
     @Operation(summary = "Find vehicles by Company")
     @ApiResponses(value = {

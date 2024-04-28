@@ -9,6 +9,8 @@ import com.estacionamento.app.exceptions.NotSaveException;
 import com.estacionamento.app.repositories.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,13 +36,14 @@ public class CompanyService {
         }
     }
 
-    public List<DataCompanyDTO> findAll() {
-        List<Company> companies = companyRepository.findAll();
-        List<DataCompanyDTO> companiesDTOS = new ArrayList<>();
+    public Page<DataCompanyDTO> findAll(Pageable pageable) {
+        Page<Company> companies = companyRepository.findAll(pageable);
 
-        convertListCompanyToDataCompanyDTO(companies, companiesDTOS);
+        return companies.map(this::convertCompanyToDataCompanyDTO);
+    }
 
-        return companiesDTOS;
+    private DataCompanyDTO convertCompanyToDataCompanyDTO(Company company) {
+        return new DataCompanyDTO(company.getId(), company.getName(), company.getAllSpaces(), company.getOccupiedSpaces());
     }
 
     private void convertListCompanyToDataCompanyDTO(List<Company> companies, List<DataCompanyDTO> companiesDTOS) {
