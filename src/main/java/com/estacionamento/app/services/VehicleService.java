@@ -13,6 +13,8 @@ import com.estacionamento.app.repositories.CompanyRepository;
 import com.estacionamento.app.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -59,13 +61,15 @@ public class VehicleService {
         }
     }
 
-    public List<VehicleDTO> findAll() {
-        List<Vehicle> allVehicles = vehicleRepository.findAll();
-        List<VehicleDTO> allVehiclesDTO = new ArrayList<>();
+    public Page<VehicleDTO> findAll(Pageable pageable) {
+        Page<Vehicle> allVehicles = vehicleRepository.findAll(pageable);
 
-        generatedAllVehiclesDTO(allVehicles, allVehiclesDTO);
+        return allVehicles.map(this::convertVehicleToVehicleDTO);
+    }
 
-        return allVehiclesDTO;
+    private VehicleDTO convertVehicleToVehicleDTO(Vehicle vehicle) {
+        CompanyDTO companyDTO = new CompanyDTO(vehicle.getCompany().getId(), vehicle.getCompany().getName());
+        return new VehicleDTO(vehicle.getId(), vehicle.getModel(), vehicle.getPlate(), vehicle.getType(), companyDTO);
     }
 
     private void generatedAllVehiclesDTO(List<Vehicle> allVehicles, List<VehicleDTO> allVehiclesDTO) {
