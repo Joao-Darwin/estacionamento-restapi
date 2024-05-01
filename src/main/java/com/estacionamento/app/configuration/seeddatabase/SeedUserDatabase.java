@@ -24,13 +24,15 @@ public class SeedUserDatabase implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        User user = new User();
+        User user = userRepository.findByEmail("admin@admin.com");
 
-        user.setName("Admin");
-        user.setEmail("admin@admin.com");
-        user.setPassword(passwordEncoder.encode("admin@123"));
-        user.setRole(UserJobRole.SUPER_ADMIN);
+        if (user != null) {
+            user.setName("Admin");
+            user.setEmail("admin@admin.com");
+            user.setPassword(passwordEncoder.encode("admin@123"));
+            user.setRole(UserJobRole.SUPER_ADMIN);
 
-        userRepository.save(user);
+            userRepository.save(user);
+        }
     }
 }
