@@ -61,6 +61,16 @@ sudo mvn clean install
 ```bash
 mvn spring-boot:run
 ```
+<h2>Usando Docker</h2>
+
+### Instalar depedências do projeto
+```bash
+sudo mvn clean install -DskipTests
+```
+### Subir containers com docker compose
+```bash
+docker compose up
+```
 
 <div>
   <h2 id="author">Autor</h2>
