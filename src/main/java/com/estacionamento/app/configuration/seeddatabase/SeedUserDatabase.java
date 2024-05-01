@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Profile("dev")
 @Configuration
 public class SeedUserDatabase implements CommandLineRunner {
 
@@ -26,7 +25,9 @@ public class SeedUserDatabase implements CommandLineRunner {
     public void run(String... args) {
         User user = userRepository.findByEmail("admin@admin.com");
 
-        if (user != null) {
+        if (user == null) {
+            user = new User();
+
             user.setName("Admin");
             user.setEmail("admin@admin.com");
             user.setPassword(passwordEncoder.encode("admin@123"));
